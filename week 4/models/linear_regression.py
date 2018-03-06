@@ -82,7 +82,12 @@ class LinearRegression(object):
     # TODO:                                                                 #
     # Calculate the loss value and gradient matrix with linear_loss_..      #
     #########################################################################
-    loss, grad = linear_loss_vectorized(self.W, X, y, reg)
+    y_pred = X.dot(self.W)
+    loss_list = y_pred - y
+    loss = sum(loss_list ** 2) / (2 * len(y_pred)) + reg * sum(self.W ** 2)
+
+    tmp = np.array(y_pred - y)
+    grad = (X.transpose().dot(tmp)) / len(y_pred) + reg * 2 * self.W
     #########################################################################
     #                       END OF YOUR CODE                                #
     #########################################################################
